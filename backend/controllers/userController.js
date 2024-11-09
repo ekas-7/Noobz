@@ -5,6 +5,8 @@ import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import {v2 as cloudinary} from 'cloudinary' 
 import appointmentModel from "../models/appointmentModel.js";
+import FormData from 'form-data';
+import axios from "axios";
 
 import razorpay from 'razorpay'
 
@@ -92,31 +94,31 @@ const getProfile = async(req,res) => {
     }
 }
 
-const updateProfile = async(req,res) => {
-    try{
-        const {userId,name,phone,address,dob,gender} = req.body;
-        const imageFile = req.file;
+const updateProfileData = async (req, res) => {
+    try {
+        const { userId, name, phone, address, dob, gender ,image } = req.body;
 
-        if(!name || !phone || !address || !dob || !gender){
-            return res.json({success:false,message:'missing data'});
+        if (!name || !phone || !address || !dob || !gender) {
+            return res.json({ success: false, message: 'missing data' });
         }
 
-        await userModel.findByIdAndUpdate(userId,{name,phone,address:JSON.parse(address),dob,gender});
+        await userModel.findByIdAndUpdate(userId, {
+            name,
+            phone,
+            address: JSON.parse(address),
+            dob,
+            gender,
+            image
+        });
 
-        if(imageFile){
-            const imageUpload = await cloudinary.uploader.upload(imageFile.path,{resource_type:'image'});
-            const imageURL = imageUpload.secure_url
-
-            await userModel.findByIdAndUpdate(userId,{image:imageURL})
-        }
-
-        res.json({success:true,message:"profile updated"});
+        res.json({ success: true, message: "Profile data updated" });
+    } catch (err) {
+        console.error(err);
+        res.json({ success: false, message: err.message });
     }
-    catch(err){
-        console.log(err);   
-        res.json({success:false,message:err});
-    }
-}
+};
+
+
 
 const bookAppointment = async(req,res) => {
     try{
@@ -236,4 +238,4 @@ const paymentRazorpay = async(req,res) => {
     }
 }
 
-export {registerUser,loginUser,getProfile,updateProfile,bookAppointment,listAppointments,cancelAppointment}
+export {registerUser,loginUser,getProfile,updateProfileData,bookAppointment,listAppointments,cancelAppointment}
