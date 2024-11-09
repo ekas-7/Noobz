@@ -75,8 +75,8 @@ const Testimonials = ({
   };
 
   return (
-    <div className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50 text-center">
-      <h2 className="text-3xl font-bold text-charcoal mb-12">Testimonials</h2>
+    <div className="px-4 sm:px-6 lg:px-8 bg-gray-50 text-center py-20">
+      <h2 className="text-4xl font-bold text-charcoal mb-12">Don't listen to us, see what others think</h2>
       <div
         ref={containerRef}
         className={cn(
