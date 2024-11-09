@@ -92,29 +92,54 @@ const getProfile = async(req,res) => {
     }
 }
 
-const updateProfile = async(req,res) => {
-    try{
-        const {userId,name,phone,address,dob,gender} = req.body;
+const updateProfile = async (req, res) => {
+    try {
+        const { userId, name, phone, address, dob, gender } = req.body;
         const imageFile = req.file;
 
-        if(!name || !phone || !address || !dob || !gender){
-            return res.json({success:false,message:'missing data'});
+        if (!name || !phone || !address || !dob || !gender) {
+            return res.json({ success: false, message: 'missing data' });
         }
 
-        await userModel.findByIdAndUpdate(userId,{name,phone,address:JSON.parse(address),dob,gender});
+        // Update user info without the image
+        await userModel.findByIdAndUpdate(userId, {
+            name,
+            phone,
+            address: JSON.parse(address),
+            dob,
+            gender
+        });
 
-        if(imageFile){
-            const imageUpload = await cloudinary.uploader.upload(imageFile.path,{resource_type:'image'});
-            const imageURL = imageUpload.secure_url
+        // Upload image to Pinata if available
+        if (imageFile) {
+            const fileBuffer = await fs.readFile(imageFile.path);
 
-            await userModel.findByIdAndUpdate(userId,{image:imageURL})
+            const formData = new FormData();
+            formData.append('file', fileBuffer, imageFile.originalname);
+
+            try {
+                const response = await axios.post('https://api.pinata.cloud/pinning/pinFileToIPFS', formData, {
+                    headers: {
+                        ...formData.getHeaders(),
+                        pinata_api_key: process.env.PINATA_API_KEY,
+                        pinata_secret_api_key: process.env.PINATA_API_SECRET,
+                    },
+                });
+
+                const imageURL = `https://gateway.pinata.cloud/ipfs/${response.data.IpfsHash}`;
+
+                // Update the user profile with the IPFS URL
+                await userModel.findByIdAndUpdate(userId, { image: imageURL });
+            } catch (error) {
+                console.error('Error uploading image to Pinata:', error);
+                return res.json({ success: false, message: 'Image upload to Pinata failed' });
+            }
         }
 
-        res.json({success:true,message:"profile updated"});
-    }
-    catch(err){
-        console.log(err);   
-        res.json({success:false,message:err});
+        res.json({ success: true, message: "profile updated" });
+    } catch (err) {
+        console.log(err);
+        res.json({ success: false, message: err.message });
     }
 }
 
