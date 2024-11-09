@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Menu, X, CheckCircle, Camera, Upload, Shield, Star, ChevronDown } from 'lucide-react';
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const navigate = useNavigate();
   
     return (
       <nav className="fixed top-0 left-0 right-0 bg-white shadow-sm z-50">
@@ -12,11 +14,11 @@ const Navbar = () => {
               <span className="text-2xl font-bold text-charcoal">Aurea</span>
             </div>
             <div className="hidden md:flex items-center space-x-8">
-              <a href="#features" className="text-charcoal hover:text-peach transition-colors duration-100">Features</a>
-              <a href="#how-it-works" className="text-charcoal hover:text-peach transition-colors duration-100">How it Works</a>
-              <a href="#benefits" className="text-charcoal hover:text-peach transition-colors duration-100">Benefits</a>
+              <span className="text-charcoal hover:text-peach transition-colors duration-100 cursor-pointer" onClick={() => navigate("/all-doctors")}>All doctors</span>
+              <span className="text-charcoal hover:text-peach transition-colors duration-100 cursor-pointer" onClick={() => navigate("/about-us")}>About Us</span>
+              <span className="text-charcoal hover:text-peach transition-colors duration-100 cursor-pointer" onClick={() => navigate("/contact-us")}>Contact Us</span>
               <button className="bg-peach text-black px-6 py-2 rounded-lg hover:bg-opacity-90 font-medium">
-                Get Started
+                Login
               </button>
             </div>
             <div className="md:hidden flex items-center">
