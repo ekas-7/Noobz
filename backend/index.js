@@ -1,10 +1,12 @@
 import express from 'express'
 import cors from 'cors';
 import 'dotenv/config'
+import connectDB from './config/db.js';
 
 //app config
 const app = express();
 const port = process.env.PORT || 3000
+connectDB();
 
 
 //middlewares
@@ -18,6 +20,6 @@ app.get('/',(req,res) => {
 
 // Listener 
 app.listen(port,() => {
-    console.log(`server stated on ${port}`);
+    console.log(`server stated on http://localhost:${port}`);
     
 })
