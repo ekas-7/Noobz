@@ -29,7 +29,7 @@ const PatientCard = ({ patient }) => {
       <div className="flex gap-3">
         <button className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-charcoal px-4 py-2 text-white transition-colors hover:bg-opacity-90">
           <ShoppingCart className="h-4 w-4" />
-          Buy Data ($99)
+          Buy Data
         </button>
         <button className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-charcoal px-4 py-2 text-charcoal transition-colors hover:bg-gray-50">
           <Mail className="h-4 w-4" />
