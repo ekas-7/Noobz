@@ -15,6 +15,7 @@ const Navbar = () => {
             </div>
             <div className="hidden md:flex items-center space-x-8">
               <span className="text-charcoal hover:text-peach transition-colors duration-100 cursor-pointer" onClick={() => navigate("/all-doctors")}>All doctors</span>
+              <span className="text-charcoal hover:text-peach transition-colors duration-100 cursor-pointer" onClick={() => navigate("/buy")}>Marketplace</span>
               <span className="text-charcoal hover:text-peach transition-colors duration-100 cursor-pointer" onClick={() => navigate("/about-us")}>About Us</span>
               <span className="text-charcoal hover:text-peach transition-colors duration-100 cursor-pointer" onClick={() => navigate("/contact-us")}>Contact Us</span>
               <button className="bg-peach text-black px-6 py-2 rounded-lg hover:bg-opacity-90 font-medium">
