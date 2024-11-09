@@ -1,8 +1,14 @@
 import React from 'react'
+import { Route,Routes } from 'react-router-dom'
+import LandingPage from './pages/LandingPage.jsx'
 
 const App = () => {
   return (
-    <div className='text-2xl font-bold'>App</div>
+    <>
+      <Routes>
+        <Route index path='/' element={<LandingPage />} />
+      </Routes>
+    </>
   )
 }
 
