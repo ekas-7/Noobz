@@ -1,117 +1,179 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { AppContext } from '../../context/AppContext.jsx'
-import axios from 'axios'
-import { toast } from 'react-toastify'
+import React, { useContext, useEffect, useState } from "react";
+import { AppContext } from "../../context/AppContext.jsx";
+import axios from "axios";
+import { toast } from "react-toastify";
+import Layout from "../../pages/Layout.jsx";
+import { Video, CreditCard, X } from 'lucide-react';
 
 function AllAppointments() {
-  const { backendUrl, token, getDoctorsData } = useContext(AppContext)
-  const [appointments, setAppointments] = useState([])
-  const months = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+  const { backendUrl, token, getDoctorsData } = useContext(AppContext);
+  const [appointments, setAppointments] = useState([]);
+  const months = [
+    "",
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
 
   const slotFormat = (slotDate) => {
-    const dateArray = slotDate.split('_')
-    const day = dateArray[0]
-    const monthIndex = Number(dateArray[1])
-    const year = dateArray[2]
-    return `${day} ${months[monthIndex]} ${year}`
-  }
+    const dateArray = slotDate.split("_");
+    const day = dateArray[0];
+    const monthIndex = Number(dateArray[1]);
+    const year = dateArray[2];
+    return `${day} ${months[monthIndex]} ${year}`;
+  };
 
   const cancelAppointment = async (appointmentId) => {
     try {
-      const { data } = await axios.post(backendUrl + '/api/user/cancelAppointment', { appointmentId }, { headers: { Authorization: `Bearer ${token}` } })
+      const { data } = await axios.post(
+        backendUrl + "/api/user/cancelAppointment",
+        { appointmentId },
+        { headers: { Authorization: `Bearer ${token}` } },
+      );
       if (data.success) {
-        toast.success(data.message)
-        listAppointments()
-        getDoctorsData()
+        toast.success(data.message);
+        listAppointments();
+        getDoctorsData();
       } else {
-        toast.error(data.message)
+        toast.error(data.message);
       }
     } catch (err) {
-      toast.error(err.message)
+      toast.error(err.message);
     }
-  }
+  };
 
   const listAppointments = async () => {
     try {
-      const { data } = await axios.get(backendUrl + '/api/user/listAppointments', { headers: { Authorization: `Bearer ${token}` } })
+      const { data } = await axios.get(
+        backendUrl + "/api/user/listAppointments",
+        { headers: { Authorization: `Bearer ${token}` } },
+      );
       if (data.success) {
-        setAppointments(data.appointments.reverse())
+        setAppointments(data.appointments.reverse());
       } else {
-        console.log("Couldn't find appointments")
+        console.log("Couldn't find appointments");
       }
     } catch (err) {
-      toast.error(err.message)
+      toast.error(err.message);
     }
-  }
+  };
 
   const isTimeForVideoCall = (appointmentTime) => {
-    const currentTime = new Date()
-    const appointmentDate = new Date(appointmentTime)
-    return currentTime >= appointmentDate
-  }
+    const currentTime = new Date();
+    const appointmentDate = new Date(appointmentTime);
+    return currentTime >= appointmentDate;
+  };
 
   useEffect(() => {
-    if (token) listAppointments()
-  }, [token])
+    if (token) listAppointments();
+  }, [token]);
 
-  return (
-    <div className="p-10 pt-4">
-      <p className="text-gray-600 font-semibold text-xl mb-4">My Appointments</p>
-      <hr className="bg-gray-300 h-[2px] mb-6" />
-
-      <div className="space-y-6  max-h-[85vh] overflow-y-scroll min-h-[60vh]">
-        {appointments.map((item, index) => (
-          <div key={index} className="border border-gray-300 rounded-lg shadow-md p-4 sm:flex gap-6 bg-white hover:shadow-lg transition-shadow">
-            <img 
-              className="w-full sm:w-40 h-40 object-cover rounded-lg bg-[#C9D8FF]"
-              src={item.docData.image} 
-              alt="Doctor"
+  const AppointmentCard = ({ item }) => {
+    return (
+      <div className="bg-white rounded-xl border border-gray-100 p-6 shadow-sm transition-shadow hover:shadow-md">
+        <div className="flex flex-col sm:flex-row gap-6">
+          {/* Doctor Image */}
+          <div className="sm:w-40 w-full">
+            <img
+              className="w-full h-40 rounded-lg object-cover bg-[#C9D8FF]"
+              src={item.docData.image}
+              alt={item.docData.name}
             />
+          </div>
 
-            <div className="w-full flex flex-col justify-between">
+          {/* Appointment Details */}
+          <div className="flex-1 space-y-4">
+            {/* Doctor Info with Status Tag */}
+            <div className="flex justify-between items-start">
               <div>
-                <p className="text-lg font-semibold text-gray-800">{item.docData.name}</p>
+                <h3 className="text-lg font-semibold text-charcoal">
+                  {item.docData.name}
+                </h3>
                 <p className="text-sm text-gray-500">{item.docData.speciality}</p>
+              </div>
+              <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                item.cancelled 
+                  ? 'bg-red-100 text-red-700'
+                  : 'bg-green-100 text-green-700'
+              }`}>
+                {item.cancelled ? 'Cancelled' : 'Active'}
+              </span>
+            </div>
 
-                <p className="mt-4 font-semibold text-gray-700">Address:</p>
-                <p className="text-sm text-gray-500">{item.docData.address.line1}</p>
-                <p className="text-sm text-gray-500">{item.docData.address.line2}</p>
+            {/* Address */}
+            <div>
+              <p className="font-medium text-gray-700">Location</p>
+              <p className="text-sm text-gray-600">{item.docData.address.line1}</p>
+              <p className="text-sm text-gray-600">{item.docData.address.line2}</p>
+            </div>
 
-                <div className="mt-4 flex items-center gap-2">
-                  <p className="font-semibold text-gray-700">Date & Time:</p>
-                  <p className="text-sm text-gray-500">{slotFormat(item.slotDate)} | {item.slotTime}</p>
-                </div>
+            {/* Date & Time */}
+            <div className="flex items-center gap-2">
+              <div className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm">
+                {slotFormat(item.slotDate)} | {item.slotTime}
               </div>
             </div>
 
-            {/* Right side for buttons */}
-            <div className="flex flex-col justify-center items-center ml-6 space-y-4">
-              {!item.cancelled && isTimeForVideoCall(item.slotDate + ' ' + item.slotTime) && (
-                <button className="px-6 py-2 text-sm font-medium text-white border border-blue-500 rounded bg-blue-500 hover:bg-peach transition-colors">
-                  Video Call Now
-                </button>
-              )}
-              {!item.cancelled && (
-                <button className="px-6 py-2 text-sm font-medium text-white border border-green-500 rounded bg-green-500 hover:bg-green-600 transition-colors">
+            {/* Action Buttons */}
+            {!item.cancelled && (
+              <div className="flex flex-wrap gap-3">
+                {isTimeForVideoCall(item.slotDate + " " + item.slotTime) && (
+                  <button className="flex items-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-600">
+                    <Video className="h-4 w-4" />
+                    Join Video Call
+                  </button>
+                )}
+                <button className="flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 text-white transition-colors hover:bg-green-600">
+                  <CreditCard className="h-4 w-4" />
                   Pay Now
                 </button>
-              )}
-              {!item.cancelled && (
-                <button onClick={() => cancelAppointment(item._id)} className="px-6 py-2 text-sm font-medium text-red-500 border border-red-500 rounded hover:bg-red-500 hover:text-white">
-                  Cancel Appointment
+                <button
+                  onClick={() => cancelAppointment(item._id)}
+                  className="flex items-center gap-2 rounded-lg border border-red-500 px-4 py-2 text-red-500 transition-colors hover:bg-red-50"
+                >
+                  <X className="h-4 w-4" />
+                  Cancel
                 </button>
-              )}
-              {item.cancelled && (
-                <button className="px-6 py-2 text-sm font-medium text-gray-500 border border-red-500 rounded cursor-not-allowed">
-                  Appointment Cancelled
-                </button>
-              )}
-            </div>
+              </div>
+            )}
           </div>
-        ))}
+        </div>
       </div>
-    </div>
-  )
+    );
+  };
+
+
+  return (
+    <Layout>
+      <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <h1 className="text-3xl font-bold text-charcoal mb-4">
+              My Appointments
+            </h1>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Manage your upcoming and past appointments with healthcare providers.
+            </p>
+          </div>
+
+          <div className="space-y-6">
+            {appointments.map((item, index) => (
+              <AppointmentCard key={index} item={item} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </Layout>
+  );
 }
 
-export default AllAppointments
+export default AllAppointments;
