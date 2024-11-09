@@ -3,7 +3,7 @@ import HeroSection from '../components/landingPage/HeroSection'
 import Navbar from '../components/Navbar'
 import Features from '../components/landingPage/Features'
 import HowItWorks from '../components/landingPage/HowItWorks'
-import Benefits from '../components/landingPage/Benefits'
+// import Benefits from '../components/landingPage/Benefits'
 import Testimonials from '../components/landingPage/Testimonials'
 import FAQs from '../components/landingPage/Faqs'
 import CallToAction from '../components/landingPage/CallToAction'
@@ -14,9 +14,9 @@ const LandingPage = () => {
     <div className='min-h-screen font-inter'>
         <Navbar />
         <HeroSection />
-        <Features />
         <HowItWorks />
-        <Benefits />
+        <Features />
+        {/* <Benefits /> */}
         <Testimonials />
         <FAQs />
         <CallToAction />

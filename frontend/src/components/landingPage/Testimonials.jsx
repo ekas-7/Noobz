@@ -1,10 +1,10 @@
-import { Menu, X, CheckCircle, Camera, Upload, Shield, Star, ChevronDown } from 'lucide-react';
+import { Star } from 'lucide-react';
 import { cn } from "../../lib/utils";
 import React, { useEffect, useState } from "react";
 
 const Testimonials = ({
   direction = "left",
-  speed = "fast",
+  speed = "slow",
   pauseOnHover = true,
   className
 }) => {
@@ -20,25 +20,29 @@ const Testimonials = ({
   const items = [
     {
         quote: "qwertyuiop",
-        name: "name",
-        title: "title",
+        name: "Karandeep Singh",
+        title: "AI Engineer",
+        img: "/people/karan.png"
     },
     {
         quote: "qwertyuiop",
-        name: "name",
-        title: "title",
+        name: "Arnav Anand",
+        title: "Product Designer",
+        img: "/people/arnav.png"
     },
     {
         quote: "qwertyuiop",
-        name: "name",
-        title: "title",
+        name: "Ekaspreet Singh Atwal",
+        title: "System Architect",
+        img: '/people/ekas.jpg'
     },
     {
         quote: "qwertyuiop",
-        name: "name",
-        title: "title",
+        name: "Saurabh Sahu",
+        title: "Frontend Engineer",
+        img: '/people/saurabh.png'
     }
-]
+  ];
 
   function addAnimation() {
     if (containerRef.current && scrollerRef.current) {
@@ -71,44 +75,50 @@ const Testimonials = ({
   };
 
   return (
-    <div
-      ref={containerRef}
-      className={cn(
-        "scroller relative z-20 max-w-7xl overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]",
-        className
-      )}
-    >
-      <ul
-        ref={scrollerRef}
+    <div className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50 text-center">
+      <h2 className="text-3xl font-bold text-charcoal mb-12">Testimonials</h2>
+      <div
+        ref={containerRef}
         className={cn(
-          "flex min-w-full shrink-0 gap-6 py-6 w-max flex-nowrap",
-          start && "animate-scroll",
-          pauseOnHover && "hover:[animation-play-state:paused]"
+          "scroller relative z-20 max-w-7xl mx-auto overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]",
+          className
         )}
       >
-        {items.map((item, idx) => (
-          <div
-            key={idx}
-            className="bg-white p-6 rounded-2xl shadow-lg max-w-xs transition-transform transform hover:scale-105"
-          >
-            <div className="flex mb-3">
-              {[1, 2, 3, 4, 5].map((star) => (
-                <Star key={star} className="h-5 w-5 text-yellow-500 fill-current" />
-              ))}
-            </div>
-            <p className="text-gray-700 mb-5">
-              "Aurea helped me identify my skin condition quickly and accurately. The recommendations were spot-on!"
-            </p>
-            <div className="flex items-center">
-              <div className="w-10 h-10 bg-gray-300 rounded-full mr-3"></div>
-              <div>
-                <p className="font-semibold text-gray-800">Sarah Johnson</p>
-                <p className="text-sm text-gray-500">Verified User</p>
+        <ul
+          ref={scrollerRef}
+          className={cn(
+            "flex min-w-full shrink-0 gap-6 py-6 w-max flex-nowrap",
+            start && "animate-scroll",
+            pauseOnHover && "hover:[animation-play-state:paused]"
+          )}
+        >
+          {items.map((item, idx) => (
+            <div
+              key={idx}
+              className="bg-white p-6 rounded-2xl shadow-lg max-w-xs transition-transform transform hover:scale-105"
+            >
+              <div className="flex mb-3">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <Star key={star} className="h-5 w-5 text-yellow-500 fill-current" />
+                ))}
+              </div>
+              <p className="text-gray-700 mb-5 text-left">
+                "Aurea helped me identify my skin condition quickly and accurately. The recommendations were spot-on!"
+                { item.quote }
+              </p>
+              <div className="flex items-center">
+                <div className="w-10 h-10 bg-gray-300 rounded-full mr-3">
+                  <img className='rounded-full' src={item.img} />
+                </div>
+                <div>
+                  <p className="font-semibold text-gray-800 text-left">{ item.name }</p>
+                  <p className="text-sm text-gray-500 text-left">{ item.title }</p>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
-      </ul>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

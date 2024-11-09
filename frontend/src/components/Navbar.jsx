@@ -12,10 +12,10 @@ const Navbar = () => {
               <span className="text-2xl font-bold text-charcoal">Aurea</span>
             </div>
             <div className="hidden md:flex items-center space-x-8">
-              <a href="#features" className="text-charcoal hover:text-melon">Features</a>
-              <a href="#how-it-works" className="text-charcoal hover:text-melon">How it Works</a>
-              <a href="#benefits" className="text-charcoal hover:text-melon">Benefits</a>
-              <button className="bg-melon text-white px-6 py-2 rounded-full hover:bg-opacity-90">
+              <a href="#features" className="text-charcoal hover:text-peach transition-colors duration-100">Features</a>
+              <a href="#how-it-works" className="text-charcoal hover:text-peach transition-colors duration-100">How it Works</a>
+              <a href="#benefits" className="text-charcoal hover:text-peach transition-colors duration-100">Benefits</a>
+              <button className="bg-peach text-black px-6 py-2 rounded-lg hover:bg-opacity-90 font-medium">
                 Get Started
               </button>
             </div>
@@ -32,7 +32,7 @@ const Navbar = () => {
               <a href="#features" className="block px-3 py-2 text-charcoal hover:text-melon">Features</a>
               <a href="#how-it-works" className="block px-3 py-2 text-charcoal hover:text-melon">How it Works</a>
               <a href="#benefits" className="block px-3 py-2 text-charcoal hover:text-melon">Benefits</a>
-              <button className="w-full text-center bg-melon text-white px-6 py-2 rounded-full hover:bg-opacity-90">
+              <button className="w-full text-center bg-peach font-medium text-black px-6 py-2 rounded-lg hover:bg-opacity-90">
                 Get Started
               </button>
             </div>
