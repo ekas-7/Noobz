@@ -87,7 +87,7 @@ function AllAppointments() {
             {/* Right side for buttons */}
             <div className="flex flex-col justify-center items-center ml-6 space-y-4">
               {!item.cancelled && isTimeForVideoCall(item.slotDate + ' ' + item.slotTime) && (
-                <button className="px-6 py-2 text-sm font-medium text-white border border-blue-500 rounded bg-blue-500 hover:bg-blue-600 transition-colors">
+                <button className="px-6 py-2 text-sm font-medium text-white border border-blue-500 rounded bg-blue-500 hover:bg-peach transition-colors">
                   Video Call Now
                 </button>
               )}

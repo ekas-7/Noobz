@@ -22,7 +22,7 @@ const HeroSection = () => {
               Detect Skin Conditions with AI Precision and consult the top dermatologists
             </h1>
             
-            <p className="text-xl text-gray-600 mb-8">
+            <p className="text-xl text-gray-600 mb-8 block w-3/5">
               Upload a photo and get instant, accurate skin condition analysis powered by our in-house AI doctor Dr. Derma
             </p>
             
@@ -43,7 +43,7 @@ const HeroSection = () => {
             </div>
             */}
 
-            <div className="mb-8">
+            <div className="mb-4">
               <TestimonialBanner />
             </div>
 

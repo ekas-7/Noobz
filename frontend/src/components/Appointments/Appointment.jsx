@@ -95,7 +95,7 @@ function Appointments() {
         {/* Doctor Image Section */}
         <div className="flex-1 w-full sm:max-w-[300px] sm:w-[30vw] h-auto">
           <img
-            className="bg-primary w-full sm:max-w-[1000px] rounded-lg object-cover"
+            className="bg-[#C9D8FF] w-full sm:max-w-[1000px] rounded-lg object-cover"
             src={doc.image}
             alt=""
           />
@@ -138,7 +138,7 @@ function Appointments() {
               docSlot.map((item, index) => (
                 <div 
                   key={index} 
-                  className={`flex flex-col justify-center items-center border border-gray-400 ${slotIdx === index ? 'bg-[#4F5FFF] text-white' : ''} py-6 px-3 w-[60px] rounded-full text-[13px] cursor-pointer`}
+                  className={`flex flex-col justify-center items-center border border-gray-400 ${slotIdx === index ? 'bg-peach text-white' : ''} py-6 px-3 w-[60px] rounded-full text-[13px] cursor-pointer`}
                   onClick={() => setSlotIdx(index)}
                 >
                   <p>{item[0] && dayOfWeek[item[0].dateTime.getDay()]}</p>
@@ -154,7 +154,7 @@ function Appointments() {
             {docSlot[slotIdx]?.map((item, index) => (
               <p 
                 key={index}
-                className={`flex justify-center items-center border border-gray-400 ${slotTime === item.time ? 'bg-[#4F5FFF] text-white' : ''} rounded-full text-[13px] cursor-pointer py-2 px-6`}
+                className={`flex justify-center items-center border border-gray-400 ${slotTime === item.time ? 'bg-peach text-white' : ''} rounded-full text-[13px] cursor-pointer py-2 px-6`}
                 onClick={() => setSlotTime(item.time)}
               >
                 {item.time}
