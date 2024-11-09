@@ -9,6 +9,9 @@ export default {
       colors: {
         charcoal: '#36454f',
         melon: '#febaad',
+      },
+      fontFamily: {
+        inter: ['Inter', 'sans-serif'],
       }
     }
   },
