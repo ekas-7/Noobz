@@ -15,7 +15,7 @@ import BuyingPage from './pages/BuyingPage.jsx';
 import Login from './components/Login/Login.jsx';
 import AboutUs from './components/AboutUs/AboutUs.jsx'
 import ContactUs from './components/ContactUs/ContactUs.jsx';
-
+import VideoCall from './components/VideoCall/VideoCall.jsx';
 const App = () => {
   const location = useLocation();
 
@@ -24,7 +24,7 @@ const App = () => {
       <ToastContainer />
 
       <div className='flex items-start h-[100vh] '>
-      {(location.pathname !== '/'|| location.pathname !== '/login' ) && <Sidebar />}
+      {/* {location.pathname !== '/' && <Sidebar />} */}
 
         <div className='w-full p-6'>
           <Routes>
@@ -37,6 +37,7 @@ const App = () => {
             <Route path="/all-doctors/:speciality" element={<AllDoctors/>}/>
             <Route path="/appointment/:docId" element={<Appointment/>}/>
             <Route path='/my-appointments' element={<AllAppointments/>} />
+            <Route path='/video-call' element={<VideoCall/>} />
             <Route path='/login' element={<Login/>} />
             <Route path='/about-us' element={<AboutUs/>} />
             <Route path='/contact-us' element={<ContactUs/>} />
