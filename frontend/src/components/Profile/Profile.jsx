@@ -6,26 +6,73 @@ import axios from 'axios';
 
 function Profile() {
     const [isEdit, setIsEdit] = useState(false);
-    const [image, setImage] = useState(false);
+    const [image, setImage] = useState(null); // Set default to null instead of false
 
     const { backendUrl, userData, setUserData, token, loadUserProfileData } = useContext(AppContext);
 
+    const pinataApiKey = import.meta.env.VITE_PINATA_API_KEY;  // Pinata API Key from env
+    const pinataApiSecret = import.meta.env.VITE_PINATA_API_SECRET; // Pinata API Secret from env
+    
+    const pinataEndpoint = "https://api.pinata.cloud/pinning/pinFileToIPFS"; // Pinata API endpoint
+   
+
+    // Function to upload image to Pinata
+    const uploadToPinata = async (imageFile) => {
+        const formData = new FormData();
+    
+        // Append the file to formData
+        formData.append('file', imageFile);
+
+        const config = {
+            headers: {
+                "Content-Type": "multipart/form-data",
+                pinata_api_key: pinataApiKey,
+                pinata_secret_api_key: pinataApiSecret,
+            },
+        };
+    
+        try {
+            const response = await axios.post(pinataEndpoint, formData, config);
+            return response.data.IpfsHash; // Returns the IPFS hash of the uploaded file
+        } catch (error) {
+            console.error("Error uploading to Pinata", error);
+            toast.error("Error uploading image to Pinata");
+            return null;
+        }
+    };
+    
     const updateUserProfileData = async () => {
         try {
-            const formData = new FormData();
-
-            formData.append('name', userData.name || '');
-            formData.append('phone', userData.phone || '');
-            formData.append('address', JSON.stringify(userData.address || {}));
-            formData.append('gender', userData.gender || '');
-            formData.append('dob', userData.dob || '');
-
-            image && formData.append('image', image);
-
-            const { data } = await axios.post(`${backendUrl}/api/user/updateProfile`, formData, {
-                headers: { Authorization: `Bearer ${token}` },
-            });
-
+            // Prepare user data as a JSON object
+            const profileData = {
+                name: userData.name || '',
+                phone: userData.phone || '',
+                address: userData.address || {},
+                gender: userData.gender || '',
+                dob: userData.dob || '',
+                image: userData.image, // Keep the existing image URL if no new image is provided
+            };
+    
+            // If a new image is selected, upload it to Pinata
+            if (image) {
+                const ipfsHash = await uploadToPinata(image);
+                if (ipfsHash) {
+                    profileData.image = `https://gateway.pinata.cloud/ipfs/${ipfsHash}`;
+                }
+            }
+    
+            // Send the JSON payload instead of form data
+            const { data } = await axios.post(
+                `${backendUrl}/api/user/updateProfile`,
+                profileData,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        'Content-Type': 'application/json', // Set content type as JSON
+                    },
+                }
+            );
+    
             if (data.success) {
                 toast.success(data.message);
                 await loadUserProfileData();
@@ -39,7 +86,7 @@ function Profile() {
             toast.error(err.message);
         }
     };
-
+    
     const handleEdit = () => setIsEdit(!isEdit);
 
     return (
@@ -194,41 +241,6 @@ function Profile() {
                                 </p>
                             )}
                         </div>
-                    </div>
-
-                    <div className="mt-4">
-                        <p className="font-medium text-lg">Address :</p>
-                        {isEdit ? (
-                            <>
-                                <input
-                                    className="w-full p-2 bg-gray-100 rounded-lg mt-2"
-                                    type="text"
-                                    onChange={(e) =>
-                                        setUserData((prev) => ({
-                                            ...prev,
-                                            address: { ...prev.address, line1: e.target.value },
-                                        }))
-                                    }
-                                    value={userData.address?.line1 || ''}
-                                />
-                                <input
-                                    className="w-full p-2 bg-gray-100 rounded-lg mt-2"
-                                    type="text"
-                                    onChange={(e) =>
-                                        setUserData((prev) => ({
-                                            ...prev,
-                                            address: { ...prev.address, line2: e.target.value },
-                                        }))
-                                    }
-                                    value={userData.address?.line2 || ''}
-                                />
-                            </>
-                        ) : (
-                            <div className="text-gray-500 font-medium border border-gray-300 rounded-lg p-2 mt-2">
-                                <p>{userData.address?.line1}</p>
-                                <p>{userData.address?.line2}</p>
-                            </div>
-                        )}
                     </div>
                 </div>
             </div>

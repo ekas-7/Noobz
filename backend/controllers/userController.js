@@ -97,8 +97,10 @@ const getProfile = async(req,res) => {
 const updateProfileData = async (req, res) => {
     try {
         const { userId, name, phone, address, dob, gender ,image } = req.body;
-
+        console.log(req.body);
         if (!name || !phone || !address || !dob || !gender) {
+            
+            
             return res.json({ success: false, message: 'missing data' });
         }
 

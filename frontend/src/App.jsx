@@ -17,7 +17,7 @@ const App = () => {
   const location = useLocation();
 
   return (
-    <div className='grid grid-cols-12 grid-rows-12'>
+    <>
       <ToastContainer />
 
       <div className='flex items-start h-[100vh] '>
@@ -36,7 +36,7 @@ const App = () => {
           </Routes>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 

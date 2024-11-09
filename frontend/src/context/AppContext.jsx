@@ -1,7 +1,7 @@
 import { createContext, useDebugValue, useEffect, useState } from "react";
 import axios from 'axios'
 import { toast } from "react-toastify";
-import { useFetcher } from "react-router-dom";
+// import { useFetcher } from "react-router-dom";
 
 export const AppContext = createContext();
 
@@ -12,6 +12,7 @@ const AppContextProvider = (props) => {
     const [doctors,setDoctorsData] = useState([]);
     // const [token,setToken] = useState(localStorage.getItem('token') ? localStorage.getItem('token') : false)
     const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MWZjODQ0ZmQ1NmFlNWUwYzhiZDFmZSIsImlhdCI6MTczMTE0NzU3Mn0.odpzoGq3oQccHrHj3F_11e202pAC6Jwbnuvg94sJmxY'
+    // const token = ''
     
     const loadUserProfileData = async () => {
         try {
