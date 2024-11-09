@@ -48,7 +48,6 @@ function Sidebar() {
   return (
     <div className="col-span-2 row-span-12 h-screen overflow-hidden border-r">
       <Data />
-
       <div className="min-h-screen bg-white">
         <ul className="mt-5 flex flex-col items-center justify-center text-gray-600">
           {sidebarLinks.map((link) => (
