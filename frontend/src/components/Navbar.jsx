@@ -1,10 +1,37 @@
-import { useState } from "react";
-import { Menu, X, CheckCircle, Camera, Upload, Shield, Star, ChevronDown } from 'lucide-react';
+import { useState,useContext,useEffect } from "react";
+import { Menu, X } from 'lucide-react';
 import { useNavigate } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
+import { AppContext } from "../context/AppContext";
+// import Login from "./Login/Login";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
+
+    const { user, isAuthenticated,loginWithRedirect, logout } = useAuth0();
+
+    const {token,setToken,backendUrl} = useContext(AppContext)
+  
+    useEffect(() => {
+      const fetchToken = async () => {
+        if (isAuthenticated && user) {
+          try {
+            const response = await axios.post(backendUrl + "/api/user/generate-token", { email: user.email });
+            localStorage.setItem("customToken", response.data.authentication); // Save the token in local storage
+          } catch (error) {
+            console.error("Error generating token:", error);
+          }
+        }
+      };
+      fetchToken();
+    }, [isAuthenticated, user]);
+  
+    const handleLogin = () => {
+      isAuthenticated
+        ? logout({ logoutParams: { returnTo: window.location.origin } })
+        : loginWithRedirect();
+    };
   
     return (
       <nav className="fixed top-0 left-0 right-0 bg-white shadow-sm z-50">
@@ -14,11 +41,16 @@ const Navbar = () => {
               <span className="text-2xl font-bold text-charcoal">Aurea</span>
             </div>
             <div className="hidden md:flex items-center space-x-8">
+            <span className="text-charcoal hover:text-peach transition-colors duration-100 cursor-pointer" onClick={() => navigate("/dashboard")}>Dashboard</span>
               <span className="text-charcoal hover:text-peach transition-colors duration-100 cursor-pointer" onClick={() => navigate("/all-doctors")}>All doctors</span>
+              <span className="text-charcoal hover:text-peach transition-colors duration-100 cursor-pointer" onClick={() => navigate("/buy")}>Marketplace</span>
               <span className="text-charcoal hover:text-peach transition-colors duration-100 cursor-pointer" onClick={() => navigate("/about-us")}>About Us</span>
               <span className="text-charcoal hover:text-peach transition-colors duration-100 cursor-pointer" onClick={() => navigate("/contact-us")}>Contact Us</span>
-              <button className="bg-peach text-black px-6 py-2 rounded-lg hover:bg-opacity-90 font-medium">
-                Login
+              <button
+                className="bg-peach text-black px-6 py-2 rounded-lg hover:bg-opacity-90 font-medium"
+                onClick={() => handleLogin()}
+              >
+                {isAuthenticated ? 'Logout' : 'Login'}
               </button>
             </div>
             <div className="md:hidden flex items-center">
@@ -44,4 +76,4 @@ const Navbar = () => {
     );
   };
 
-  export default Navbar;
+export default Navbar;
