@@ -55,11 +55,11 @@ function AllAppointments() {
   }, [token])
 
   return (
-    <div className="mt-16 pb-20">
+    <div className="p-10 pt-4">
       <p className="text-gray-600 font-semibold text-xl mb-4">My Appointments</p>
       <hr className="bg-gray-300 h-[2px] mb-6" />
 
-      <div className="space-y-6">
+      <div className="space-y-6  max-h-[85vh] overflow-y-scroll min-h-[60vh]">
         {appointments.map((item, index) => (
           <div key={index} className="border border-gray-300 rounded-lg shadow-md p-4 sm:flex gap-6 bg-white hover:shadow-lg transition-shadow">
             <img 
