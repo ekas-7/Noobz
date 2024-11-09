@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar'
 import Features from '../components/landingPage/Features'
 import HowItWorks from '../components/landingPage/HowItWorks'
 import Benefits from '../components/landingPage/Benefits'
+import Testimonials from '../components/landingPage/Testimonials'
 
 const LandingPage = () => {
   return (
@@ -13,6 +14,7 @@ const LandingPage = () => {
         <Features />
         <HowItWorks />
         <Benefits />
+        <Testimonials />
     </div>
   )
 }
