@@ -1,6 +1,7 @@
 import React from 'react'
 import { Route,Routes,useLocation } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import LandingPage from './pages/LandingPage.jsx'
 import Dashboard from './components/Dashboard/Dashboard.jsx'
@@ -16,10 +17,10 @@ const App = () => {
   const location = useLocation();
 
   return (
-    <>
+    <div className='grid grid-cols-12 grid-rows-12'>
       <ToastContainer />
 
-      <div className='flex items-start h-[100vh]'>
+      <div className='flex items-start h-[100vh] '>
       {location.pathname !== '/' && <Sidebar />}
 
         <div className='w-full'>
@@ -35,7 +36,7 @@ const App = () => {
           </Routes>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
