@@ -6,7 +6,12 @@ import axios from 'axios';
 
 function Profile() {
     const [isEdit, setIsEdit] = useState(false);
-    const [image, setImage] = useState(null); // Set default to null instead of false
+    const [image, setImage] = useState(null); 
+    const [buffer, setBuffer] = useState(null);
+
+
+
+  
 
     const { backendUrl, userData, setUserData, token, loadUserProfileData } = useContext(AppContext);
 
@@ -19,27 +24,37 @@ function Profile() {
     // Function to upload image to Pinata
     const uploadToPinata = async (imageFile) => {
         const formData = new FormData();
+    formData.append('file', new Blob([buffer]));
+        
+        reader.onloadend = async () => {
+            const buffer = new Uint8Array(reader.result);  // Convert the file to buffer if needed
+            
+            // Append the file to formData
+            formData.append('file', imageFile);
     
-        // Append the file to formData
-        formData.append('file', imageFile);
-
-        const config = {
-            headers: {
-                "Content-Type": "multipart/form-data",
-                pinata_api_key: pinataApiKey,
-                pinata_secret_api_key: pinataApiSecret,
-            },
+            const config = {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    pinata_api_key: pinataApiKey,
+                    pinata_secret_api_key: pinataApiSecret,
+                },
+            };
+    
+            try {
+                const response = await axios.post(pinataEndpoint, formData, config);
+                return response.data.IpfsHash; // Returns the IPFS hash of the uploaded file
+            } catch (error) {
+                console.error("Error uploading to Pinata", error);
+                toast.error("Error uploading image to Pinata");
+                return null;
+            }
         };
     
-        try {
-            const response = await axios.post(pinataEndpoint, formData, config);
-            return response.data.IpfsHash; // Returns the IPFS hash of the uploaded file
-        } catch (error) {
-            console.error("Error uploading to Pinata", error);
-            toast.error("Error uploading image to Pinata");
-            return null;
-        }
+        // If you don't need the file buffer and just want to upload the file:
+        // formData.append('file', imageFile);
+        // Proceed with axios.post directly
     };
+    
     
     const updateUserProfileData = async () => {
         try {
@@ -50,21 +65,21 @@ function Profile() {
                 address: userData.address || {},
                 gender: userData.gender || '',
                 dob: userData.dob || '',
-                image: userData.image, // Keep the existing image URL if no new image is provided
+                image: userData.image, 
             };
-    
+            console.log(userData);
             // If a new image is selected, upload it to Pinata
             if (image) {
                 const ipfsHash = await uploadToPinata(image);
                 if (ipfsHash) {
-                    profileData.image = `https://gateway.pinata.cloud/ipfs/${ipfsHash}`;
+                    userData.image = `https://gateway.pinata.cloud/ipfs/${ipfsHash}`;
                 }
             }
     
-            // Send the JSON payload instead of form data
-            const { data } = await axios.post(
-                `${backendUrl}/api/user/updateProfile`,
-                profileData,
+            console.log(userData)
+            const { data } = await axios.put(
+                `${backendUrl}/api/user/updateProfiledata`,
+                userData,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,

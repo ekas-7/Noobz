@@ -11,6 +11,7 @@ import AllDoctors from './components/AllDoctors/AllDoctors.jsx'
 import Appointment from './components/Appointments/Appointment.jsx'
 import AllAppointments from './components/Dashboard/AllAppointments.jsx'
 import Sidebar from './components/Sidebar/Sidebar.jsx'
+import VideoCall from './components/VideoCall/VideoCall.jsx';
 
 const App = () => {
   const location = useLocation();
@@ -32,6 +33,7 @@ const App = () => {
             <Route path="/all-doctors/:speciality" element={<AllDoctors/>}/>
             <Route path="/appointment/:docId" element={<Appointment/>}/>
             <Route path='/my-appointments' element={<AllAppointments/>} />
+            <Route path='/video-call' element={<VideoCall/>} />
           </Routes>
         </div>
       </div>
