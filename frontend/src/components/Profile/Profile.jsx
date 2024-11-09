@@ -83,7 +83,7 @@ function Profile() {
                     {/* Name */}
                     {isEdit ? (
                         <input
-                            className="bg-gray-200 text-xl md:text-2xl text-center font-medium mt-4 rounded-lg border border-blue-400 shadow-sm w-full"
+                            className="bg-gray-200 text-xl md:text-2xl text-center font-medium mt-4 rounded-lg border border-peach shadow-sm w-full"
                             type="text"
                             name="name"
                             onChange={(e) =>
@@ -103,14 +103,14 @@ function Profile() {
                     {isEdit ? (
                         <button
                             onClick={updateUserProfileData}
-                            className="w-full py-2 px-4 md:px-6 border border-blue-600 rounded-md bg-blue-600 text-white hover:bg-white hover:text-gray-400 transition"
+                            className="w-full py-2 px-4 md:px-6 border border-peachrounded-md bg-peach text-black hover:bg-opacity-90 transition"
                         >
                             Save Information
                         </button>
                     ) : (
                         <button
                             onClick={handleEdit}
-                            className="w-full py-2 px-4 md:px-6 border border-blue-600 rounded-md bg-blue-600 text-white hover:bg-white hover:text-gray-400 transition"
+                            className="w-full py-2 px-4 md:px-6 border border-peachrounded-md bg-peach text-black hover:bg-opacity-90 transition"
                         >
                             Edit Profile
                         </button>
