@@ -8,14 +8,14 @@ const HeroSection = () => {
   const navigate = useNavigate();
   
   return (
-    <div className="relative min-h-screen">
+    <div className="relative min-h-screen flex flex-col justify-center items-center">
       {/* Background Pattern - Positioned absolutely */}
       <div className="absolute inset-0">
         <GridPattern />
       </div>
       
       {/* Content - Positioned relatively to appear above background */}
-      <div className="relative pt-20 pb-16 px-4 sm:px-6 lg:px-8">
+      <div className="relative  px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center flex flex-col items-center">
             <h1 className="text-4xl md:text-6xl font-bold text-charcoal mb-6 w-3/4">
@@ -48,7 +48,7 @@ const HeroSection = () => {
             </div>
 
             <button 
-              className="text-white bg-charcoal px-8 py-4 rounded-full text-lg font-semibold hover:bg-opacity-90 shadow-lg"
+              className="text-black bg-peach px-8 py-4 rounded-lg text-lg font-semibold hover:bg-opacity-90 shadow-lg"
               onClick={() => navigate("/predict")}
             >
               Diagnose your issue with Dr. Derma

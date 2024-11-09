@@ -16,6 +16,12 @@ export default {
       colors: {
         charcoal: '#36454f',
         melon: '#febaad',
+        palepink: '#faf3e0',
+        eggplant: '#513449',
+        dullpink: '#CA31A0',
+        flax: '#FFEE93',
+        peach: '#FFC09F',
+        ashgray: '#A5CBC3'
       },
       fontFamily: {
         inter: ['Inter', 'sans-serif'],
