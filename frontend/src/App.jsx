@@ -24,7 +24,7 @@ const App = () => {
       <ToastContainer />
 
       <div className='flex items-start h-[100vh] '>
-      {location.pathname !== '/' && <Sidebar />}
+      {(location.pathname !== '/'|| location.pathname !== '/login' ) && <Sidebar />}
 
         <div className='w-full p-6'>
           <Routes>
