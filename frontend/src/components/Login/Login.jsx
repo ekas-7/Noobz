@@ -1,17 +1,18 @@
 import React, { useState, useContext } from 'react';
 import {AppContext} from '../../context/AppContext.jsx';
+import {useNavigate} from 'react-router-dom'
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import {useLocation} from 'react-router-dom'
 
 function Login() {
-    const location = useLocation();
     const [state, setState] = useState('Sign Up');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
 
     const { setToken, backendUrl } = useContext(AppContext);
+
+    const navigate = useNavigate();
 
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -29,6 +30,7 @@ function Login() {
                 if (data.success) {
                     localStorage.setItem('token', data.token);
                     setToken(data.token);
+                    navigate('/');
                 } else {
                     toast.error(data.message);
                 }
