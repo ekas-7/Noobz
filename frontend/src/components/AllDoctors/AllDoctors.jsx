@@ -30,34 +30,34 @@ function AllDoctors() {
         </div>
         
         <div className={`${showFilter ? '' : 'hidden'} sm:block`}>
-          <p onClick={() => speciality === 'General physician' ? navigate('/all-doctors') : navigate('/all-doctors/General physician')} 
-            className={`p-2 mb-2 border border-gray-300 lg:w-[200px] rounded-lg cursor-pointer ${speciality === 'General physician' ? 'bg-[#C9D8FF]' : ''}`}>
-              General physician
+          <p onClick={() => speciality === 'Medical Dermatology' ? navigate('/all-doctors') : navigate('/all-doctors/Medical Dermatology')} 
+            className={`p-2 mb-2 border border-gray-300 lg:w-[200px] rounded-lg cursor-pointer ${speciality === 'Medical Dermatology' ? 'bg-[#C9D8FF]' : ''}`}>
+              Medical Dermatology
           </p>
 
-          <p onClick={() => speciality === 'Gynecologist' ? navigate('/all-doctors') : navigate('/all-doctors/Gynecologist')} 
-            className={`p-2 mb-2 border border-gray-300 lg:w-[200px] rounded-lg cursor-pointer ${speciality === 'Gynecologist' ? 'bg-[#C9D8FF]' : ''}`}>
-              Gynecologist
+          <p onClick={() => speciality === 'Pediatric Dermatology' ? navigate('/all-doctors') : navigate('/all-doctors/Pediatric Dermatology')} 
+            className={`p-2 mb-2 border border-gray-300 lg:w-[200px] rounded-lg cursor-pointer ${speciality === 'Pediatric Dermatology' ? 'bg-[#C9D8FF]' : ''}`}>
+              Pediatric Dermatology
           </p>
 
-          <p onClick={() => speciality === 'Dermatologist' ? navigate('/all-doctors') : navigate('/all-doctors/Dermatologist')} 
-            className={`p-2 mb-2 border border-gray-300 lg:w-[200px] rounded-lg cursor-pointer ${speciality === 'Dermatologist' ? 'bg-[#C9D8FF]' : ''}`}>
-              Dermatologist
+          <p onClick={() => speciality === 'Cosmetic Dermatology' ? navigate('/all-doctors') : navigate('/all-doctors/Cosmetic Dermatology')} 
+            className={`p-2 mb-2 border border-gray-300 lg:w-[200px] rounded-lg cursor-pointer ${speciality === 'Cosmetic Dermatology' ? 'bg-[#C9D8FF]' : ''}`}>
+              Cosmetic Dermatology
           </p>
 
-          <p onClick={() => speciality === 'Pediatricians' ? navigate('/all-doctors') : navigate('/all-doctors/Pediatricians')} 
-            className={`p-2 mb-2 border border-gray-300 lg:w-[200px] rounded-lg cursor-pointer ${speciality === 'Pediatricians' ? 'bg-[#C9D8FF]' : ''}`}>
-              Pediatricians
+          <p onClick={() => speciality === 'Mohs Surgery' ? navigate('/all-doctors') : navigate('/all-doctors/Mohs Surgery')} 
+            className={`p-2 mb-2 border border-gray-300 lg:w-[200px] rounded-lg cursor-pointer ${speciality === 'Mohs Surgery' ? 'bg-[#C9D8FF]' : ''}`}>
+              Mohs Surgery
           </p>
 
-          <p onClick={() => speciality === 'Neurologist' ? navigate('/all-doctors') : navigate('/all-doctors/Neurologist')} 
-            className={`p-2 mb-2 border border-gray-300 lg:w-[200px] rounded-lg cursor-pointer ${speciality === 'Neurologist' ? 'bg-[#C9D8FF]' : ''}`}>
-              Neurologist
+          <p onClick={() => speciality === 'Immunodermatology' ? navigate('/all-doctors') : navigate('/all-doctors/Immunodermatology')} 
+            className={`p-2 mb-2 border border-gray-300 lg:w-[200px] rounded-lg cursor-pointer ${speciality === 'Immunodermatology' ? 'bg-[#C9D8FF]' : ''}`}>
+              Immunodermatology
           </p>
 
-          <p onClick={() => speciality === 'Gastroenterologist' ? navigate('/all-doctors') : navigate('/all-doctors/Gastroenterologist')} 
-            className={`p-2 mb-2 border border-gray-300 lg:w-[200px] rounded-lg cursor-pointer ${speciality === 'Gastroenterologist' ? 'bg-[#C9D8FF]' : ''}`}>
-              Gastroenterologist
+          <p onClick={() => speciality === 'Teledermatology' ? navigate('/all-doctors') : navigate('/all-doctors/Teledermatology')} 
+            className={`p-2 mb-2 border border-gray-300 lg:w-[200px] rounded-lg cursor-pointer ${speciality === 'Teledermatology' ? 'bg-[#C9D8FF]' : ''}`}>
+              Teledermatology
           </p>
 
         </div>
