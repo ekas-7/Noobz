@@ -1,11 +1,49 @@
 import React, { useContext, useEffect, useState } from "react";
-import { assets } from "../../assets/assets_frontend/assets.js";
 import { useNavigate, useParams } from "react-router-dom";
-import { AppContext } from "../../context/AppContext.jsx";
-import RelatedDoctors from "./RelatedDoctors.jsx";
+import { AppContext } from "../../context/AppContext";
+import { Calendar, Check, Clock, Info, MapPin, Medal } from "lucide-react";
 import { toast } from "react-toastify";
 import axios from "axios";
-import Layout from "../../pages/Layout.jsx";
+import Layout from "../../pages/Layout";
+import RelatedDoctors from "./RelatedDoctors";
+
+const DateSlot = ({ date, isSelected, onClick }) => {
+  const dayOfWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+  
+  return (
+    <button
+      onClick={onClick}
+      className={`flex h-20 w-20 flex-col items-center justify-center rounded-xl border transition-all
+        ${
+          isSelected
+            ? "border-purple-300 bg-purple-50 text-purple-700"
+            : "border-gray-200 hover:border-purple-200 hover:bg-gray-50"
+        }`}
+    >
+      <span className="text-sm font-medium">{dayOfWeek[date.getDay()]}</span>
+      <span className="mt-1 text-xl font-bold">{date.getDate()}</span>
+      <span className="text-xs text-gray-500">
+        {date.toLocaleString('default', { month: 'short' })}
+      </span>
+    </button>
+  );
+};
+
+const TimeSlot = ({ time, isSelected, onClick }) => {
+  return (
+    <button
+      onClick={onClick}
+      className={`rounded-lg border px-4 py-2 transition-all
+        ${
+          isSelected
+            ? "border-purple-300 bg-purple-50 text-purple-700"
+            : "border-gray-200 hover:border-purple-200 hover:bg-gray-50"
+        }`}
+    >
+      <span className="text-sm font-medium">{time}</span>
+    </button>
+  );
+};
 
 function Appointments() {
   const { docId } = useParams();
@@ -15,7 +53,6 @@ function Appointments() {
   const [slotTime, setSlotTime] = useState("");
   const { doctors, currencySymbol, backendUrl, token, getDoctorsData } =
     useContext(AppContext);
-  const dayOfWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
   const navigate = useNavigate();
 
   // Find the doctor data by ID
@@ -28,8 +65,8 @@ function Appointments() {
   const getAvailableSlots = async () => {
     setDocSlot([]);
     let today = new Date();
-    let startHour = 10; // Starting hour for slots
-    let endHour = 21; // Ending hour for slots
+    let startHour = 10;
+    let endHour = 21;
 
     for (let i = 0; i < 7; i++) {
       let currentDate = new Date(today);
@@ -67,6 +104,10 @@ function Appointments() {
       toast.warn("Login to book an appointment");
       return navigate("/login");
     }
+    if (!slotTime) {
+      toast.warn("Please select a time slot");
+      return;
+    }
     try {
       const date = docSlot[slotIdx][0].dateTime;
       let day = date.getDate();
@@ -76,7 +117,7 @@ function Appointments() {
       const { data } = await axios.post(
         `${backendUrl}/api/user/bookAppointment`,
         { docId, slotDate, slotTime },
-        { headers: { Authorization: `Bearer ${token}` } },
+        { headers: { Authorization: `Bearer ${token}` } }
       );
       if (data.success) {
         toast.success(data.message);
@@ -101,98 +142,123 @@ function Appointments() {
 
   return (
     <Layout>
-      <div className="flex flex-col justify-center gap-2 align-middle">
-        <div className="flex w-full flex-col gap-2 px-4 sm:flex-row">
-          {/* Doctor Image Section */}
-          <div className="h-auto w-full flex-1 sm:w-[30vw] sm:max-w-[300px]">
-            <img
-              className="w-full rounded-lg bg-[#C9D8FF] object-cover sm:max-w-[1000px]"
-              src={doc.image}
-              alt=""
-            />
-          </div>
+      <div className="min-h-screen bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <div className="rounded-xl bg-white p-6 shadow-sm lg:p-8">
+            <div className="grid gap-8 lg:grid-cols-3">
+              {/* Doctor Profile Section */}
+              <div className="lg:col-span-1">
+                <div className="overflow-hidden rounded-xl">
+                  <img
+                    className="h-64 w-full object-cover"
+                    src={doc.image}
+                    alt={doc.name}
+                  />
+                </div>
+              </div>
 
-          {/* Doctor Information Section */}
-          <div className="flex flex-1 flex-col rounded-lg border border-gray-400 p-8 py-7 sm:mx-0">
-            <div className="flex items-center gap-3">
-              <p className="text-3xl font-semibold text-gray-700">{doc.name}</p>
-              <img src={assets.verified_icon} alt="Verified Icon" />
-            </div>
+              {/* Doctor Information Section */}
+              <div className="lg:col-span-2">
+                <div className="flex items-center gap-3">
+                  <h1 className="text-2xl font-bold text-gray-900">{doc.name}</h1>
+                  <Check className="h-5 w-5 text-blue-500" />
+                </div>
 
-            <div className="text-md mt-2 flex items-center gap-3 text-gray-500">
-              <p>
-                {doc.degree} - {doc.speciality}
-              </p>
-              <p className="rounded-full border border-gray-600 px-3 py-[1px]">
-                {doc.experience} years
-              </p>
-            </div>
+                <div className="mt-2 flex flex-wrap items-center gap-3">
+                  <span className="inline-flex items-center rounded-full bg-purple-100 px-3 py-1 text-sm font-medium text-purple-700">
+                    {doc.speciality}
+                  </span>
+                  <span className="inline-flex items-center gap-1 text-sm text-gray-500">
+                    <Medal className="h-4 w-4" />
+                    {doc.degree}
+                  </span>
+                  <span className="inline-flex items-center gap-1 text-sm text-gray-500">
+                    <Calendar className="h-4 w-4" />
+                    {doc.experience} years experience
+                  </span>
+                </div>
 
-            <div className="mt-2 flex gap-2">
-              <p>About</p>
-              <img src={assets.info_icon} alt="Info Icon" />
-            </div>
-
-            <p className="text-md mt-1 text-gray-500">{doc.about}</p>
-
-            <div className="mt-3 flex items-center">
-              <p className="text-lg text-gray-600">Appointment fees:</p>
-              <p className="ml-2">
-                {currencySymbol}
-                {doc.fees}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Slot Selection Section */}
-        <div className="flex w-full flex-col gap-2 px-4 sm:flex-row">
-          <div className="h-auto w-[30vw] max-w-[300px] flex-1"></div>
-
-          <div className="mt-4 flex-1 flex-col sm:mx-0">
-            <p className="text-md text-gray-500">Booking Slots</p>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {docSlot.length ? (
-                docSlot.map((item, index) => (
-                  <div
-                    key={index}
-                    className={`flex flex-col items-center justify-center border border-gray-400 ${slotIdx === index ? "bg-peach text-white" : ""} w-[60px] cursor-pointer rounded-full px-3 py-6 text-[13px]`}
-                    onClick={() => setSlotIdx(index)}
-                  >
-                    <p>{item[0] && dayOfWeek[item[0].dateTime.getDay()]}</p>
-                    <p>{item[0] && item[0].dateTime.getDate()}</p>
+                <div className="mt-6">
+                  <div className="flex items-center gap-2">
+                    <Info className="h-4 w-4 text-gray-400" />
+                    <h2 className="text-lg font-semibold text-gray-900">About</h2>
                   </div>
-                ))
-              ) : (
-                <p>No available slots</p>
-              )}
+                  <p className="mt-2 text-gray-600">{doc.about}</p>
+                </div>
+
+                <div className="mt-6 flex items-center gap-2">
+                  <span className="text-lg font-semibold text-gray-900">
+                    Consultation Fee:
+                  </span>
+                  <span className="text-xl font-bold text-purple-600">
+                    {currencySymbol}
+                    {doc.fees}
+                  </span>
+                </div>
+              </div>
             </div>
 
-            <div className="mt-4 flex flex-wrap gap-2 overflow-x-auto">
-              {docSlot[slotIdx]?.map((item, index) => (
-                <p
-                  key={index}
-                  className={`flex items-center justify-center border border-gray-400 ${slotTime === item.time ? "bg-peach text-white" : ""} cursor-pointer rounded-full px-6 py-2 text-[13px]`}
-                  onClick={() => setSlotTime(item.time)}
+            {/* Appointment Booking Section */}
+            <div className="mt-8 border-t pt-8">
+              <h2 className="mb-6 text-xl font-bold text-gray-900">
+                Book an Appointment
+              </h2>
+
+              {/* Date Selection */}
+              <div className="mb-8">
+                <h3 className="mb-4 flex items-center gap-2 text-sm font-medium text-gray-700">
+                  <Calendar className="h-4 w-4" />
+                  Select Date
+                </h3>
+                <div className="flex gap-4 overflow-x-auto pb-4">
+                  {docSlot.map((slots, index) => (
+                    slots[0] && (
+                      <DateSlot
+                        key={index}
+                        date={slots[0].dateTime}
+                        isSelected={slotIdx === index}
+                        onClick={() => setSlotIdx(index)}
+                      />
+                    )
+                  ))}
+                </div>
+              </div>
+
+              {/* Time Selection */}
+              <div className="mb-8">
+                <h3 className="mb-4 flex items-center gap-2 text-sm font-medium text-gray-700">
+                  <Clock className="h-4 w-4" />
+                  Select Time
+                </h3>
+                <div className="flex flex-wrap gap-3">
+                  {docSlot[slotIdx]?.map((slot, index) => (
+                    <TimeSlot
+                      key={index}
+                      time={slot.time}
+                      isSelected={slotTime === slot.time}
+                      onClick={() => setSlotTime(slot.time)}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* Book Button */}
+              <div className="flex justify-end">
+                <button
+                  onClick={bookAppointment}
+                  className="rounded-lg bg-purple-600 px-6 py-3 text-white transition-colors hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
                 >
-                  {item.time}
-                </p>
-              ))}
-            </div>
-
-            {/* Book Appointment Button */}
-            <div className="mt-4 flex justify-center sm:justify-normal">
-              <button
-                onClick={bookAppointment}
-                className="w-[170px] cursor-pointer rounded-full bg-black p-2 text-white sm:w-[150px] md:w-[200px] lg:w-[250px]"
-              >
-                Book Appointment
-              </button>
+                  Book Appointment
+                </button>
+              </div>
             </div>
           </div>
-        </div>
 
-        <RelatedDoctors docId={docId} speciality={doc.speciality} />
+          {/* Related Doctors Section */}
+          <div className="mt-8">
+            <RelatedDoctors docId={docId} speciality={doc.speciality} />
+          </div>
+        </div>
       </div>
     </Layout>
   );

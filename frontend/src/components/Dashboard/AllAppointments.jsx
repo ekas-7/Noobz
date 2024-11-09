@@ -3,6 +3,7 @@ import { AppContext } from "../../context/AppContext.jsx";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Layout from "../../pages/Layout.jsx";
+import { Video, CreditCard, X } from 'lucide-react';
 
 function AllAppointments() {
   const { backendUrl, token, getDoctorsData } = useContext(AppContext);
@@ -76,81 +77,99 @@ function AllAppointments() {
     if (token) listAppointments();
   }, [token]);
 
-  return (
-    <Layout>
-      <div className="p-10 pt-4">
-        <p className="mb-4 text-xl font-semibold text-gray-600">
-          My Appointments
-        </p>
-        <hr className="mb-6 h-[2px] bg-gray-300" />
+  const AppointmentCard = ({ item }) => {
+    return (
+      <div className="bg-white rounded-xl border border-gray-100 p-6 shadow-sm transition-shadow hover:shadow-md">
+        <div className="flex flex-col sm:flex-row gap-6">
+          {/* Doctor Image */}
+          <div className="sm:w-40 w-full">
+            <img
+              className="w-full h-40 rounded-lg object-cover bg-[#C9D8FF]"
+              src={item.docData.image}
+              alt={item.docData.name}
+            />
+          </div>
 
-        <div className="max-h-[85vh] min-h-[60vh] space-y-6 overflow-y-scroll">
-          {appointments.map((item, index) => (
-            <div
-              key={index}
-              className="gap-6 rounded-lg border border-gray-300 bg-white p-4 shadow-md transition-shadow hover:shadow-lg sm:flex"
-            >
-              <img
-                className="h-40 w-full rounded-lg bg-[#C9D8FF] object-cover sm:w-40"
-                src={item.docData.image}
-                alt="Doctor"
-              />
-
-              <div className="flex w-full flex-col justify-between">
-                <div>
-                  <p className="text-lg font-semibold text-gray-800">
-                    {item.docData.name}
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    {item.docData.speciality}
-                  </p>
-
-                  <p className="mt-4 font-semibold text-gray-700">Address:</p>
-                  <p className="text-sm text-gray-500">
-                    {item.docData.address.line1}
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    {item.docData.address.line2}
-                  </p>
-
-                  <div className="mt-4 flex items-center gap-2">
-                    <p className="font-semibold text-gray-700">Date & Time:</p>
-                    <p className="text-sm text-gray-500">
-                      {slotFormat(item.slotDate)} | {item.slotTime}
-                    </p>
-                  </div>
-                </div>
+          {/* Appointment Details */}
+          <div className="flex-1 space-y-4">
+            {/* Doctor Info with Status Tag */}
+            <div className="flex justify-between items-start">
+              <div>
+                <h3 className="text-lg font-semibold text-charcoal">
+                  {item.docData.name}
+                </h3>
+                <p className="text-sm text-gray-500">{item.docData.speciality}</p>
               </div>
+              <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                item.cancelled 
+                  ? 'bg-red-100 text-red-700'
+                  : 'bg-green-100 text-green-700'
+              }`}>
+                {item.cancelled ? 'Cancelled' : 'Active'}
+              </span>
+            </div>
 
-              {/* Right side for buttons */}
-              <div className="ml-6 flex flex-col items-center justify-center space-y-4">
-                {!item.cancelled &&
-                  isTimeForVideoCall(item.slotDate + " " + item.slotTime) && (
-                    <button className="rounded border border-blue-500 bg-blue-500 px-6 py-2 text-sm font-medium text-white transition-colors hover:bg-peach">
-                      Video Call Now
-                    </button>
-                  )}
-                {!item.cancelled && (
-                  <button className="rounded border border-green-500 bg-green-500 px-6 py-2 text-sm font-medium text-white transition-colors hover:bg-green-600">
-                    Pay Now
-                  </button>
-                )}
-                {!item.cancelled && (
-                  <button
-                    onClick={() => cancelAppointment(item._id)}
-                    className="rounded border border-red-500 px-6 py-2 text-sm font-medium text-red-500 hover:bg-red-500 hover:text-white"
-                  >
-                    Cancel Appointment
-                  </button>
-                )}
-                {item.cancelled && (
-                  <button className="cursor-not-allowed rounded border border-red-500 px-6 py-2 text-sm font-medium text-gray-500">
-                    Appointment Cancelled
-                  </button>
-                )}
+            {/* Address */}
+            <div>
+              <p className="font-medium text-gray-700">Location</p>
+              <p className="text-sm text-gray-600">{item.docData.address.line1}</p>
+              <p className="text-sm text-gray-600">{item.docData.address.line2}</p>
+            </div>
+
+            {/* Date & Time */}
+            <div className="flex items-center gap-2">
+              <div className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm">
+                {slotFormat(item.slotDate)} | {item.slotTime}
               </div>
             </div>
-          ))}
+
+            {/* Action Buttons */}
+            {!item.cancelled && (
+              <div className="flex flex-wrap gap-3">
+                {isTimeForVideoCall(item.slotDate + " " + item.slotTime) && (
+                  <button className="flex items-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-600">
+                    <Video className="h-4 w-4" />
+                    Join Video Call
+                  </button>
+                )}
+                <button className="flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 text-white transition-colors hover:bg-green-600">
+                  <CreditCard className="h-4 w-4" />
+                  Pay Now
+                </button>
+                <button
+                  onClick={() => cancelAppointment(item._id)}
+                  className="flex items-center gap-2 rounded-lg border border-red-500 px-4 py-2 text-red-500 transition-colors hover:bg-red-50"
+                >
+                  <X className="h-4 w-4" />
+                  Cancel
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+
+  return (
+    <Layout>
+      <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <h1 className="text-3xl font-bold text-charcoal mb-4">
+              My Appointments
+            </h1>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Manage your upcoming and past appointments with healthcare providers.
+            </p>
+          </div>
+
+          <div className="space-y-6">
+            {appointments.map((item, index) => (
+              <AppointmentCard key={index} item={item} />
+            ))}
+          </div>
         </div>
       </div>
     </Layout>

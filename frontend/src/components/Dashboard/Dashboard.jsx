@@ -5,10 +5,8 @@ import Layout from '../../pages/Layout'
 function Dashboard() {
   return (
     <div>
-      <Layout>
-
+      {/* add layout later */}
         <Appointments/>
-      </Layout>
     </div>
   )
 }
