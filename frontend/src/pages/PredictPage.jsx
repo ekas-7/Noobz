@@ -6,9 +6,7 @@ import ChatInterface from '../components/predict/ChatInterface'
 const PredictPage = () => {
   return (
     <div>
-        <Navbar />
         <ChatInterface />
-        <Footer />
     </div>
   )
 }

@@ -22,8 +22,8 @@ function AllDoctors() {
   },[doctors,speciality]);
 
   return (
-    <div>
-      <p className='text-[18px] text-gray-600 mt-10'>Browse through the doctors specialist.</p>
+    <div className='p-10 pt-4'>
+      <p className='text-[18px] text-gray-600'>Browse through the doctors specialist.</p>
       <div className='flex flex-col sm:flex-row gap-4 mt-4'>
         <div>
           <button className={`inline-block py-1 px-3 border rounded text-sm transition-all sm:hidden ${showFilter ? 'bg-primary text-white' : ''}`} onClick={() => setShowFilter(prev => !prev)}>Filters</button>
@@ -62,7 +62,7 @@ function AllDoctors() {
 
         </div>
 
-        <div className='w-full grid grid-cols-[repeat(auto-fill,minmax(230px,1fr))] gap-4 gap-y-6'>
+        <div className='w-full grid grid-cols-[repeat(auto-fill,minmax(230px,1fr))] gap-4 gap-y-6  max-h-[88vh] overflow-y-scroll '>
         {
           filterDoc.map((item,index) => (
             <div onClick={() => navigate(`/appointment/${item._id}`)} className='rounded-lg border border-[#C9D8FF] cursor-pointer hover:translate-y-[-10px] transition-all duration-500'>
