@@ -9,7 +9,7 @@ function Sidebar() {
     // const {dToken} = useContext(DoctorContext)
 
   return (
-    <div>
+    <div className='h-screen col-span-2 row-span-10 fixed'>
         <Data/>
 
         <div className='min-h-screen bg-white border-r '>
