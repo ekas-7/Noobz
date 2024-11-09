@@ -10,14 +10,13 @@ import PredictPage from './pages/PredictPage.jsx'
 import AllDoctors from './components/AllDoctors/AllDoctors.jsx'
 import Appointment from './components/Appointments/Appointment.jsx'
 import AllAppointments from './components/Dashboard/AllAppointments.jsx'
-import Navbar from './components/Navbar/Navbar.jsx'
 import Sidebar from './components/Sidebar/Sidebar.jsx'
 
 const App = () => {
   const location = useLocation();
 
   return (
-    <div className='grid grid-cols-12 grid-rows-12'>
+    <>
       <ToastContainer />
 
       <div className='flex items-start h-[100vh] '>
@@ -36,7 +35,7 @@ const App = () => {
           </Routes>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 
