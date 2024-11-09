@@ -8,7 +8,7 @@ const userRouter = express.Router();
 userRouter.post('/register',registerUser)
 userRouter.post('/login',loginUser)
 userRouter.get('/getProfile',authUser,getProfile)
-userRouter.post('/updateProfile',upload.single('image'),authUser,updateProfile)
+userRouter.post('/updateProfile',authUser,updateProfile)
 userRouter.post('/bookAppointment',authUser,bookAppointment);
 userRouter.get('/listAppointments',authUser,listAppointments);
 userRouter.post('/cancelAppointment',authUser,cancelAppointment);
