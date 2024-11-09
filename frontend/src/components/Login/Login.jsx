@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import {AppContext} from '../../context/AppContext';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useAuth0 } from "@auth0/auth0-react";
 
 function Login() {
     const [state, setState] = useState('Sign Up');
@@ -9,31 +10,34 @@ function Login() {
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
 
-    const { setToken, backendUrl } = useContext(AppContext);
+    const {token, setToken, backendUrl } = useContext(AppContext);
+
+    const { loginWithRedirect } = useAuth0();
 
     const submitHandler = async (e) => {
-        e.preventDefault();
-        try {
-            if (state === 'Sign Up') {
-                const { data } = await axios.post(`${backendUrl}/api/user/register`, { name, password, email });
-                if (data.success) {
-                    localStorage.setItem('token', data.token);
-                    setToken(data.token);
-                } else {
-                    toast.error(data.message);
-                }
-            } else {
-                const { data } = await axios.post(`${backendUrl}/api/user/login`, { password, email });
-                if (data.success) {
-                    localStorage.setItem('token', data.token);
-                    setToken(data.token);
-                } else {
-                    toast.error(data.message);
-                }
-            }
-        } catch (err) {
-            toast.error(err.message);
-        }
+        // e.preventDefault();
+        // try {
+        //     if (state === 'Sign Up') {
+        //         const { data } = await axios.post(`${backendUrl}/api/user/register`, { name, password, email });
+        //         if (data.success) {
+        //             localStorage.setItem('token', data.token);
+        //             setToken(data.token);
+        //         } else {
+        //             toast.error(data.message);
+        //         }
+        //     } else {
+        //         const { data } = await axios.post(`${backendUrl}/api/user/login`, { password, email });
+        //         if (data.success) {
+        //             localStorage.setItem('token', data.token);
+        //             setToken(data.token);
+        //         } else {
+        //             toast.error(data.message);
+        //         }
+        //     }
+        // } catch (err) {
+        //     toast.error(err.message);
+        // }
+        loginWithRedirect()
     };
 
     const handleChange = () => {

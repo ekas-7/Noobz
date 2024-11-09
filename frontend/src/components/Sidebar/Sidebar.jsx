@@ -33,6 +33,16 @@ function Sidebar() {
                     <img src={assets.people_icon} alt="" />
                     <p className='hidden md:block'>Dr. Derma</p>
                 </NavLink>
+
+                <NavLink className={({isActive}) => `flex items-center gap-3 py-3 md:px-9 md:min-w-60 cursor-pointer ${isActive ? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`} to={'/about-us'}>
+                    <img src={assets.info_icon} alt="" />
+                    <p className='hidden md:block'>About Us</p>
+                </NavLink>
+
+                <NavLink className={({isActive}) => `flex items-center gap-3 py-3 md:px-9 md:min-w-60 cursor-pointer ${isActive ? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`} to={'/contact-us'}>
+                    <img src={assets.info_icon} alt="" />
+                    <p className='hidden md:block'>Contact Us</p>
+                </NavLink>
             </ul>
         </div>
     </div>

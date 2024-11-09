@@ -11,6 +11,9 @@ import AllDoctors from './components/AllDoctors/AllDoctors.jsx'
 import Appointment from './components/Appointments/Appointment.jsx'
 import AllAppointments from './components/Dashboard/AllAppointments.jsx'
 import Sidebar from './components/Sidebar/Sidebar.jsx'
+import Login from './components/Login/Login.jsx';
+import AboutUs from './components/AboutUs/AboutUs.jsx'
+import ContactUs from './components/ContactUs/ContactUs.jsx';
 
 const App = () => {
   const location = useLocation();
@@ -22,7 +25,7 @@ const App = () => {
       <div className='flex items-start h-[100vh] '>
       {location.pathname !== '/' && <Sidebar />}
 
-        <div className='w-full'>
+        <div className='w-full p-6'>
           <Routes>
             <Route index path='/' element={<LandingPage />} />
             <Route path='/predict' element={<PredictPage />} />
@@ -32,6 +35,9 @@ const App = () => {
             <Route path="/all-doctors/:speciality" element={<AllDoctors/>}/>
             <Route path="/appointment/:docId" element={<Appointment/>}/>
             <Route path='/my-appointments' element={<AllAppointments/>} />
+            <Route path='/login' element={<Login/>} />
+            <Route path='/about-us' element={<AboutUs/>} />
+            <Route path='/contact-us' element={<ContactUs/>} />
           </Routes>
         </div>
       </div>
