@@ -11,6 +11,7 @@ import AllDoctors from './components/AllDoctors/AllDoctors.jsx'
 import Appointment from './components/Appointments/Appointment.jsx'
 import AllAppointments from './components/Dashboard/AllAppointments.jsx'
 import Sidebar from './components/Sidebar/Sidebar.jsx'
+import BuyingPage from './pages/BuyingPage.jsx';
 import Login from './components/Login/Login.jsx';
 import AboutUs from './components/AboutUs/AboutUs.jsx'
 import ContactUs from './components/ContactUs/ContactUs.jsx';
@@ -29,6 +30,7 @@ const App = () => {
           <Routes>
             <Route index path='/' element={<LandingPage />} />
             <Route path='/predict' element={<PredictPage />} />
+            <Route path='/buy' element={<BuyingPage />} />
             <Route path='/dashboard' element={<Dashboard/>} />
             <Route path='/profile' element={<Profile/>} />
             <Route path='/all-doctors' element={<AllDoctors/>} />
