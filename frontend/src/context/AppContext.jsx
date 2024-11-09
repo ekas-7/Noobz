@@ -9,12 +9,13 @@ const AppContextProvider = (props) => {
     const backendUrl = import.meta.env.VITE_BACKEND_URL
 
     const [userData,setUserData] = useState(false);
+    const [doctors,setDoctorsData] = useState([]);
     // const [token,setToken] = useState(localStorage.getItem('token') ? localStorage.getItem('token') : false)
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MWZjODQ0ZmQ1NmFlNWUwYzhiZDFmZSIsImlhdCI6MTczMTE0NDEyNn0.oCFHsyUfoGfjliw7Bn1764_Qfwkf1KC2sRtTIyyxbow'
-
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MWZjODQ0ZmQ1NmFlNWUwYzhiZDFmZSIsImlhdCI6MTczMTE0NzU3Mn0.odpzoGq3oQccHrHj3F_11e202pAC6Jwbnuvg94sJmxY'
+    
     const loadUserProfileData = async () => {
         try {
-            const { data } = await axios.get(backendUrl + '/api/user/getProfile', { headers: { token } });
+            const { data } = await axios.get(backendUrl + '/api/user/getProfile', { headers: { Authorization:"bearer "+ token } });
             if (data.success) {
                 setUserData(data.userData)
                 console.log(data);
@@ -27,13 +28,42 @@ const AppContextProvider = (props) => {
         }
     };
 
+    const getDoctorsData = async() => {
+        try{
+            const {data} = await axios.get(backendUrl+'/api/doctor/list')
+            if(data.success){
+                console.log(data);
+                setDoctorsData(data.doctors);
+            }
+            else{
+                toast.error(data.message)
+            }
+        }
+        catch(err){
+            toast.error(err.message);
+            console.log(err); 
+        }
+    }
+
     const value = {
         backendUrl,
+        token,
         userData,setUserData,loadUserProfileData,
+        doctors,setDoctorsData,getDoctorsData
     }
 
     useEffect(() => {
-        loadUserProfileData();
+        if(token){
+            loadUserProfileData();
+            // console.log(userData);
+        }
+        else{
+            setUserData(false);
+        }
+    },[token])
+
+    useEffect(() => {
+        getDoctorsData()
     },[])
 
     return (
