@@ -81,7 +81,7 @@ const ChatInterface = () => {
 
   useEffect(() => {
     // Open Google in a new tab when the component mounts
-    window.open("https://www.google.com", "_blank");
+    window.open("https://dermachatbot-9mcagccpbsnc5xvyfujxom.streamlit.app/", "_blank");
   }, []);
 
   return (
