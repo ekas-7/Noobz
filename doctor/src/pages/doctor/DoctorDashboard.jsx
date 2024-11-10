@@ -1,11 +1,9 @@
 import React, { useContext, useEffect } from 'react'
-import { DoctorContext } from '../../context/DoctorContext'
+import { DoctorContext } from '../../Context/DoctorContext.jsx'
 import { assets } from '../../assets/assets_admin/assets.js';
-import { AppContext } from '../../context/AppContext';
 
 function DoctorDashboard() {
-  const {dToken,docDashData,setDocDashData,getDocDashData,getAppointments,cancelAppointment,completeAppointment} = useContext(DoctorContext);
-  const {slotFormat} = useContext(AppContext)
+  const {slotFormat,dToken,docDashData,setDocDashData,getDocDashData,getAppointments,cancelAppointment,completeAppointment} = useContext(DoctorContext);
 
   useEffect(() => {
     if(dToken){

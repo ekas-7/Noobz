@@ -8,6 +8,9 @@ import { Routes,Route } from 'react-router-dom';
 import NavBar from './components/Navbar.jsx';
 import Login from './pages/Login.jsx';
 import SideBar from './components/SideBar.jsx';
+import DoctorDashboard from './pages/doctor/DoctorDashboard.jsx'
+import DoctorAppointments from './pages/doctor/DoctorAppointments.jsx';
+import DoctorProfile from './pages/doctor/DoctorProfile.jsx';
 
 function App() {
   const {dToken} = useContext(DoctorContext)
