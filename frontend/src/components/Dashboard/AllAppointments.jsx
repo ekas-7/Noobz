@@ -4,10 +4,12 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import Layout from "../../pages/Layout.jsx";
 import { Video, CreditCard, X } from 'lucide-react';
+import { useNavigate } from 'react-router-dom'
 
 function AllAppointments() {
   const { backendUrl, token, getDoctorsData } = useContext(AppContext);
   const [appointments, setAppointments] = useState([]);
+  const [paymentStatus, setPaymentStatus] = useState(false);
   const months = [
     "",
     "Jan",
@@ -23,6 +25,8 @@ function AllAppointments() {
     "Nov",
     "Dec",
   ];
+
+  const navigate = useNavigate();
 
   const slotFormat = (slotDate) => {
     const dateArray = slotDate.split("_");
@@ -71,6 +75,10 @@ function AllAppointments() {
     const currentTime = new Date();
     const appointmentDate = new Date(appointmentTime);
     return currentTime >= appointmentDate;
+  };
+
+  const handlePayment = () => {
+    setPaymentStatus(true)
   };
 
   useEffect(() => {
@@ -132,10 +140,18 @@ function AllAppointments() {
                     Join Video Call
                   </button>
                 )}
-                <button className="flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 text-white transition-colors hover:bg-green-600">
+                {
+                  !paymentStatus ? (
+                    <button className="flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 text-white transition-colors hover:bg-green-600" onClick={() => handlePayment()}>
                   <CreditCard className="h-4 w-4" />
                   Pay Now
+                </button> ) : (
+                  <button className="flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 text-white transition-colors hover:bg-green-600" onClick={() => navigate("/video-call")}>
+                  <CreditCard className="h-4 w-4" />
+                  Launch Meet
                 </button>
+                )
+                }
                 <button
                   onClick={() => cancelAppointment(item._id)}
                   className="flex items-center gap-2 rounded-lg border border-red-500 px-4 py-2 text-red-500 transition-colors hover:bg-red-50"

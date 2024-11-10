@@ -11,7 +11,7 @@ function Data() {
       </div>
 
       <img
-        className="h-[120px] rounded-full sm:w-[120px]"
+        className="h-[100px] rounded-full sm:w-[100px]"
         src={userData.image}
         alt=""
       />
