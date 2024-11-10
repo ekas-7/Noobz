@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { 
   Calendar,
@@ -10,8 +10,11 @@ import {
 } from 'lucide-react';
 
 import Data from './Data.jsx';
+import { AppContext } from '../../context/AppContext.jsx';
 
 function Sidebar() {
+  const {token,setToken} = useContext(AppContext)
+
   const sidebarLinks = [
     {
       path: '/my-appointments',
@@ -41,8 +44,8 @@ function Sidebar() {
   ];
 
   const handleLogout = () => {
-    console.log("hi");
-    
+    setToken(false)
+    localStorage.removeItem('token')
   };
 
   return (
@@ -70,13 +73,15 @@ function Sidebar() {
         </ul>
 
         <div className="px-4 mt-20">
-          <button
-            onClick={handleLogout}
-            className="flex w-full items-center justify-center gap-3 rounded-lg py-3 text-gray-600 transition-colors border-2 border-purple-300 hover:bg-gray-50 md:px-5"
-          >
-            <LogOut className="h-5 w-5" />
-            <span className="hidden md:block">Logout</span>
-          </button>
+          {
+            token && <button
+                        onClick={handleLogout}
+                        className="flex w-full items-center justify-center gap-3 rounded-lg py-3 text-gray-600 transition-colors border-2 border-purple-300 hover:bg-gray-50 md:px-5"
+                      >
+                        <LogOut className="h-5 w-5" />
+                        <span className="hidden md:block">Logout</span>
+                      </button>
+          }
         </div>
       </div>
     </div>

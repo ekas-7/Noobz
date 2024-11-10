@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { AppContext } from "../../context/AppContext.jsx";
 import { useNavigate } from "react-router-dom";
+import {assets} from '../../assets/assets_frontend/assets.js'
 
 function Data() {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ function Data() {
 
       <img
         className="h-[100px] rounded-full sm:w-[100px]"
-        src={userData.image}
+        src={userData.image ? userData.image : assets.upload_area}
         alt=""
       />
 
