@@ -13,7 +13,7 @@ function Login() {
     const { setToken, backendUrl } = useContext(AppContext);
 
     const navigate = useNavigate();
-
+    
     const submitHandler = async (e) => {
         e.preventDefault();
         try {
@@ -68,7 +68,6 @@ function Login() {
             <button onClick={submitHandler} type='submit' className='w-full bg-primary bg-peach text-black py-2 px-4 mt-4 rounded-md cursor-pointer'>{state === 'Sign Up' ? "Create Account" : "Login"}</button>
             <p className='text-[14px] text-gray-600 mt-4'>{state === 'Sign Up' ? 'Already' : "Don't"} have an account? <span className='text-primary underline cursor-pointer' onClick={handleChange}>{state === 'Sign Up' ? 'Login here' : 'Create an account'}</span></p>
         </form>
-
     );
 }
 
