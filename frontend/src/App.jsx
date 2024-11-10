@@ -16,6 +16,7 @@ import Login from './components/Login/Login.jsx';
 import AboutUs from './components/AboutUs/AboutUs.jsx'
 import ContactUs from './components/ContactUs/ContactUs.jsx';
 import VideoCall from './components/VideoCall/VideoCall.jsx';
+
 const App = () => {
   const location = useLocation();
 
@@ -41,6 +42,7 @@ const App = () => {
             <Route path='/login' element={<Login/>} />
             <Route path='/about-us' element={<AboutUs/>} />
             <Route path='/contact-us' element={<ContactUs/>} />
+            {/* <Route path='/contract' element={<ton/>} /> */}
           </Routes>
         </div>
       </div>
