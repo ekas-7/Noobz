@@ -1,23 +1,18 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { 
-  Home,
   Calendar,
   UserRound,
   Brain,
   User,
-  ShoppingBag
+  ShoppingBag,
+  LogOut
 } from 'lucide-react';
 
 import Data from './Data.jsx';
 
 function Sidebar() {
   const sidebarLinks = [
-    {
-      path: '/dashboard',
-      icon: <Home className="h-5 w-5" />,
-      label: 'Dashboard'
-    },
     {
       path: '/my-appointments',
       icon: <Calendar className="h-5 w-5" />,
@@ -45,10 +40,15 @@ function Sidebar() {
     }
   ];
 
+  const handleLogout = () => {
+    console.log("hi");
+    
+  };
+
   return (
     <div className="col-span-2 row-span-12 h-screen overflow-hidden border-r">
       <Data />
-      <div className="min-h-screen bg-white">
+      <div className="flex flex-col justify-between bg-white pb-6">
         <ul className="mt-5 flex flex-col items-center justify-center text-gray-600">
           {sidebarLinks.map((link) => (
             <NavLink
@@ -68,6 +68,16 @@ function Sidebar() {
             </NavLink>
           ))}
         </ul>
+
+        <div className="px-4 mt-20">
+          <button
+            onClick={handleLogout}
+            className="flex w-full items-center justify-center gap-3 rounded-lg py-3 text-gray-600 transition-colors border-2 border-purple-300 hover:bg-gray-50 md:px-5"
+          >
+            <LogOut className="h-5 w-5" />
+            <span className="hidden md:block">Logout</span>
+          </button>
+        </div>
       </div>
     </div>
   );

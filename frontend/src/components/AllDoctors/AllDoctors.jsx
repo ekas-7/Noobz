@@ -126,7 +126,7 @@ function AllDoctors() {
             </div>
 
             {/* Doctors Grid */}
-            <div className="flex-1">
+            <div className="flex-1 overflow-y-scroll h-[500px]">
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {filterDoc.map((doctor) => (
                   <DoctorCard
