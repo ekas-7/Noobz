@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import NavBar from './components/Navbar.jsx';
 import Login from './pages/Login.jsx';
+import SideBar from './components/SideBar.jsx';
 
 function App() {
   const {dToken} = useContext(DoctorContext)
