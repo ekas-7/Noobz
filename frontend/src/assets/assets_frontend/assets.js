@@ -36,6 +36,7 @@ import General_physician from './General_physician.svg'
 import Gynecologist from './Gynecologist.svg'
 import Neurologist from './Neurologist.svg'
 import Pediatricians from './Pediatricians.svg'
+import upload_area from './upload_area.png'
 
 
 export const assets = {
@@ -61,7 +62,8 @@ export const assets = {
     General_physician,
     Gynecologist,
     Neurologist,
-    Pediatricians
+    Pediatricians,
+    upload_area
 }
 
 export const specialityData = [
