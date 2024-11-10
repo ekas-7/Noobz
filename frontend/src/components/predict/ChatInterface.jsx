@@ -79,7 +79,13 @@ const ChatInterface = () => {
     });
   };
 
+  useEffect(() => {
+    // Open Google in a new tab when the component mounts
+    window.open("https://www.google.com", "_blank");
+  }, []);
+
   return (
+    // <p>Redirecting you to google...</p>
     <div className="flex flex-col h-screen max-h-screen bg-gray-50">
       {/* Chat header */}
       <div className="bg-white border-b border-gray-200 p-4">
